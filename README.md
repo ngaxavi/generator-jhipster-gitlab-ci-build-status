@@ -1,0 +1,1 @@
+# jhipster-generator-status-ci
