@@ -21,5 +21,8 @@
   "homepage": "https://github.com/ngaxavi/generator-jhipster-status-ci#readme",
   "dependencies": {
     "yeoman-generator": "^0.23.3"
-  }
+  },
+  "files": [
+    "generators/app"
+  ]
 }
