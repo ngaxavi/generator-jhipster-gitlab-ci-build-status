@@ -3,3 +3,5 @@
 generator-jhipster-status-ci.iml
 
 .idea
+
+node_modules

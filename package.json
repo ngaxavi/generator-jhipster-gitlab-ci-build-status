@@ -1,0 +1,25 @@
+{
+  "name": "generator-jhipster-status-ci",
+  "version": "1.0.0",
+  "description": "generator jhipster for displaying the status of the continuous integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngaxavi/generator-jhipster-status-ci.git"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Xavier Ngansop",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngaxavi/generator-jhipster-status-ci/issues"
+  },
+  "homepage": "https://github.com/ngaxavi/generator-jhipster-status-ci#readme",
+  "dependencies": {
+    "yeoman-generator": "^0.23.3"
+  }
+}
