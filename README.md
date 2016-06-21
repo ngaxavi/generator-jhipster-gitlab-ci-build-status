@@ -33,7 +33,7 @@ Apache-2.0 © [Xavier Ngansop]
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-test.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-test
-[travis-image]: https://travis-ci.org/xng/generator-jhipster-test.svg?branch=master
-[travis-url]: https://travis-ci.org/xng/generator-jhipster-test
+[travis-image]: https://travis-ci.org/ngaxavi/generator-jhipster-status-ci.svg?branch=master
+[travis-url]: https://travis-ci.org/ngaxavi/generator-jhipster-ci
 [daviddm-image]: https://david-dm.org/xng/generator-jhipster-test.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/xng/generator-jhipster-module
