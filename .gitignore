@@ -1,7 +1,8 @@
-# Created by .ignore support plugin (hsz.mobi)
-
-generator-jhipster-status-ci.iml
-
-.idea
-
 node_modules
+coverage
+.idea
+*.iml
+atlassian-ide-plugin.xml
+/.project
+test/temp/
+npm-debug.log
