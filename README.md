@@ -29,7 +29,7 @@ npm update -g generator-jhipster-status-ci
 
 # License
 
-Apache-2.0 © [nxkn ljsoc]
+Apache-2.0 © [Xavier Ngansop]
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-test.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-test
