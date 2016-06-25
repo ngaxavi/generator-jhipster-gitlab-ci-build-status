@@ -17,12 +17,12 @@ As this is a [JHipster](http://jhipster.github.io/) module, we expect you have J
 To install this module:
 
 ```bash
-npm install -g generator-jhipster-status-ci
+npm install -g generator-jhipster-ci-status
 ```
 
 To update this module:
 ```bash
-npm update -g generator-jhipster-status-ci
+npm update -g generator-jhipster-ci-status
 ```
 
 # Usage
@@ -31,9 +31,9 @@ npm update -g generator-jhipster-status-ci
 
 Apache-2.0 © [Xavier Ngansop]
 
-[npm-image]: https://img.shields.io/npm/v/generator-jhipster-status-ci.svg
-[npm-url]: https://npmjs.org/package/generator-jhipster-status-ci
-[travis-image]: https://travis-ci.org/ngaxavi/generator-jhipster-status-ci.svg?branch=master
-[travis-url]: https://travis-ci.org/ngaxavi/generator-jhipster-ci
-[daviddm-image]: https://david-dm.org/ngaxavi/generator-jhipster-status-ci.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/ngaxavi/generator-jhipster-status-ci
+[npm-image]: https://img.shields.io/npm/v/generator-jhipster-ci-status.svg
+[npm-url]: https://npmjs.org/package/generator-jhipster-ci-status
+[travis-image]: https://travis-ci.org/ngaxavi/generator-jjhipster-ci-status.svg?branch=master
+[travis-url]: https://travis-ci.org/ngaxavi/generator-jhipster-ci-status
+[daviddm-image]: https://david-dm.org/ngaxavi/generator-jhipster-ci-status.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/ngaxavi/generator-jhipster-ci-status
