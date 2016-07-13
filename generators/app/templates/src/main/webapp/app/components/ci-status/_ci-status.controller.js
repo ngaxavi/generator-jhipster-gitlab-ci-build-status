@@ -14,7 +14,7 @@
 
     // if the status is running
     // check every minute if the build is finished
-    var intervalRunning = $interval(buildStatus, 100000);
+    var intervalRunning = $interval(buildStatus, 60000);
 
     function buildStatus() {
       if (vm.status === undefined || angular.equals(vm.status, "running")) {

@@ -1,38 +1,56 @@
 {
-  "name": "generator-jhipster-ci-status",
+  "name": "generator-jhipster-gitlab-ci-build-status",
   "version": "0.0.1",
-  "description": "JHipster module, display the status of the continuous integration in your JHipster application",
-  "main": "generators/app/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ngaxavi/generator-jhipster-status-ci.git"
-  },
+  "description": "Jhipster module, display the Gitlab's build status of your Jhipster application into it ",
   "keywords": [
     "yeoman-generator",
-    "jhipster-module",
-    "continuous",
-    "integration",
-    "test",
-    "status"
+    "jhipster-module"
   ],
+  "homepage": "https://github.com/ngaxavi/generator-jhipster-gitlab-ci-build-status",
   "author": {
     "name": "Xavier Ngansop",
     "email": "ngaxavi@gmail.com",
-    "url": "http://github.com/ngaxavi"
+    "url": "https://github.com/ngaxavi"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/app/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngaxavi/generator-jhipster-gitlab-ci-build-status.git"
+  },
+  "dependencies": {
+    "yeoman-generator": "0.22.4",
+    "chalk": "1.1.1",
+    "path": "0.12.7",
+    "cheerio": "0.20.0",
+    "yosay": "1.2.0",
+    "generator-jhipster": ">2.26.0"
+  },
+  "devDependencies": {
+    "fs-extra": "0.26.4",
+    "gulp": "^3.9.0",
+    "gulp-bump": "1.0.0",
+    "gulp-eslint": "1.0.0",
+    "gulp-exclude-gitignore": "1.0.0",
+    "gulp-git": "1.6.1",
+    "gulp-istanbul": "0.10.3",
+    "gulp-mocha": "2.2.0",
+    "gulp-nsp": "2.3.0",
+    "gulp-plumber": "1.0.1",
+    "gulp-rename": "^1.2.0",
+    "gulp-sequence": "0.4.4",
+    "gulp-shell": "^0.5.1",
+    "mocha": "2.3.4",
+    "yeoman-assert": "2.1.1",
+    "yeoman-test": "1.0.0"
+  },
+  "scripts": {
+    "test": "mocha test/*"
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ngaxavi/generator-jhipster-ci-status/issues"
-  },
-  "homepage": "https://github.com/ngaxavi/generator-jhipster-ci-status#readme",
-  "dependencies": {
-    "chalk": "1.1.3",
-    "cheerio": "0.20.0",
-    "generator-jhipster": ">=3.0.0",
-    "yeoman-generator": "0.23.3",
-    "yosay": "1.2.0"
-  },
-  "files": [
-    "generators/app"
-  ]
+    "url": "https://github.com/ngaxavi/generator-jhipster-gitlab-ci-build-status/issues"
+  }
 }

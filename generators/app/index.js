@@ -1,58 +1,53 @@
 'use strict';
-
+var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-var yosay = require('yosay');
 var cheerio = require('cheerio');
-var packageJson = require(__dirname + '/../../package.json');
+var yosay = require('yosay');
+var packagejs = require(__dirname + '/../../package.json');
 
-// stores JHipster variables
-var jhipsterVar = {moduleName: 'ciStatus'};
+// Stores JHipster variables
+var jhipsterVar = {moduleName: 'gitlab-ci-build-status'};
 
-// stores JHipster functions
+// Stores JHipster functions
 var jhipsterFunc = {};
 
 module.exports = yeoman.Base.extend({
+
   initializing: {
-    templates: function (args) {
-      this.composeWith('jhipster:modules', {
-        options: {
-          jhipsterVar: jhipsterVar,
-          jhipsterFunc: jhipsterFunc
+    compose: function (args) {
+      this.composeWith('jhipster:modules',
+        {
+          options: {
+            jhipsterVar: jhipsterVar,
+            jhipsterFunc: jhipsterFunc
+          }
         }
-      });
+      );
     },
     displayLogo: function () {
-      this.log(yosay('Welcome to the ' + chalk.red('JHipster Build Status in GitLab') + ' Generator! ' + chalk.yellow('v' + packageJson.version + '\n')))
+      this.log(yosay('Welcome to the ' + chalk.red('JHipster build status in GitLab') + ' generator! ' + chalk.yellow('v' + packagejs.version + '\n')));
     }
   },
+
   prompting: function () {
     var done = this.async();
-
-    //TODO: Check if JHipster application contains the gitlab-ci file
-
     var prompts = [
-      {
-        type: 'confirm',
-        name: 'confirm',
-        message: 'Would you like to enable GitLab\'s build status into your application?',
-        default: true
-      },
       {
         type: 'input',
         name: 'gitLabName',
         validate: function (input) {
-          if (/^([a-zA-Z0-9_]*)$/.test(input) && input != '') return true;
+          if (/^([a-zA-Z0-9_]*)$/.test(input) && input !== '') return true;
           return 'Your username is mandatory, cannot contain special characters or a blank space';
         },
         store: true,
-        message: 'What is your GitLab username?'
+        message: 'What is your GitLab\'s username?'
       },
       {
         type: 'input',
         name: 'gitLabProjectId',
         validate: function (input) {
-          if (/^([0-9]*)$/.test(input) && input != '') return true;
+          if (/^([0-9]*)$/.test(input) && input !== '') return true;
           return 'Your Project\'s id is mandatory, cannot contain characters, special characters or a blank space';
         },
         message: 'What is your Project\'s id in GitLab?'
@@ -69,90 +64,105 @@ module.exports = yeoman.Base.extend({
       this.props = props;
       // To access props later use this.props.someOption;
 
+      this.gitLabName = props.gitLabName;
+      this.gitLabProjectId = props.gitLabProjectId;
+      this.gitLabPrivateToken = props.gitLabPrivateToken;
       done();
     }.bind(this));
   },
-  writing: function () {
-    var done = this.async();
-    this.baseName = jhipsterVar.baseName;
-    this.webappDir = jhipsterVar.webappDir;
-    this.angularAppName = jhipsterVar.angularAppName;
 
-    this.confirm = this.props.confirm;
-    this.gitLabName = this.props.gitLabName;
-    this.gitLabProjectId = this.props.gitLabProjectId;
-    this.gitLabPrivateToken = this.props.gitLabPrivateToken;
+  writing: {
+    setupGlobalVar: function () {
+      this.webappDir = jhipsterVar.webappDir;
+      this.angularAppName = jhipsterVar.angularAppName;
+      this.authenticationType = jhipsterVar.authenticationType;
+      this.useSass = jhipsterVar.useSass;
 
-    this.template('src/main/webapp/app/ci-status/_ci-status.service.js', this.webappDir + '/app/ci-status/ci-status.service.js');
-    jhipsterFunc.addJavaScriptToIndex('app/ci-status/ci-status.service.js');
-    this.template('src/main/webapp/app/ci-status/_ci-status.controller.js', this.webappDir + '/app/ci-status/ci-status.controller.js');
-    jhipsterFunc.addJavaScriptToIndex('app/ci-status/ci-status.controller.js');
+      this.baseName = jhipsterVar.baseName;
+      // if the name contains special characters
+      // this can occur when the repository firstly was created
+      if (path.basename(process.cwd()) !== jhipsterVar.baseName) {
+        this.baseName = path.basename(process.cwd());
+      }
 
+    },
 
-    // style for ci
-    var ciStatusStyle = '.status-circle {\n' +
-      '   display: inline-block;\n' +
-      '   height: 11px;\n' +
-      '   width: 11px;\n' +
-      '   text-indent: -9999px;\n'+
-      '   margin-right: 5px;\n'+
-      '   border-radius: 100px;\n'+
-      '   vertical-align: middle;\n'+
-      '}\n\n'+
+    writeClientFiles: function () {
+      this.template('src/main/webapp/app/components/ci-status/_ci-status.service.js', this.webappDir + '/app/components/ci-status/ci-status.service.js', this, {});
+      this.template('src/main/webapp/app/components/ci-status/_ci-status.controller.js', this.webappDir + '/app/components/ci-status/ci-status.controller.js', this, {});
 
-      '#ci-status {\n'+
-      '   position: relative;\n'+
-      '   float: right;\n'+
-      '   bottom: 35px;\n'+
-      '}\n\n'+
+      if(this.authenticationType === 'oauth2' || this.authenticationType === 'jwt') {
+        this.template('src/main/webapp/app/blocks/interceptor/_ci-status.interceptor.js', this.webappDir + '/app/blocks/interceptor/ci-status.interceptor.js', this, {});
+      }
+    },
 
-      '.status-circle {\n' +
-      '   &.success {\n'+
-      '     background: #39aa56;\n'+
-      '   }\n'+
-      '   &.running {\n'+
-      '     background: #e75e40;\n'+
-      '   }\n'+
-      '   &.failed {\n'+
-      '     background: #d22852;\n'+
-      '   }\n'+
-      '}\n\n' +
+    updateClientFiles: function () {
+      if(this.authenticationType === 'oauth2' || jhipsterVar.authenticationType === 'jwt'){
+        jhipsterFunc.addAngularJsInterceptor('CiStatusInterceptor');
+      }
 
-    '.ci-link {\n'+
-    '   display: inline-block;\n'+
-    '   vertical-align: middle;\n'+
-    '   color: #666;\n'+
-    '   text-decoration: none;\n'+
-    '}\n\n'+
+      // style for ci
+      var ciStatusStyle = '.status-circle {\n' +
+        '   display: inline-block;\n' +
+        '   height: 11px;\n' +
+        '   width: 11px;\n' +
+        '   text-indent: -9999px;\n' +
+        '   margin-right: 5px;\n' +
+        '   border-radius: 100px;\n' +
+        '   vertical-align: middle;\n' +
+        '}\n\n' +
 
-    '.ci-content {\n'+
-    '   padding: 0;\n'+
-    '   margin: 0;\n'+
-    '   list-style: none;\n'+
-    '}';
+        '#ci-status {\n' +
+        '   position: relative;\n' +
+        '   float: right;\n' +
+        '   bottom: 35px;\n' +
+        '}\n\n' +
 
-    jhipsterFunc.addMainCSSStyle(true, ciStatusStyle, 'Add sign in style for build status');
+        '.status-circle.success {\n' +
+        '     background: #39aa56;\n' +
+        '}\n\n' +
 
+        '.status-circle.running {\n' +
+        '     background: #e75e40;\n' +
+        '}\n\n' +
 
-    var html = this.fs.read(this.webappDir + '/index.html');
-    var $ = cheerio.load(html);
-    var footer = $('.footer');
-    if(footer.find('#ci-status').length == 0) {
-      footer.append("    <div ng-controller=\"CiStatusController as vm\" id=\"ci-status\">\n" +
-        "                    <div class=\"ci-name\">GitLab CI Status</div>\n" +
-        "                         <ul class=\"ci-content\">\n" +
-        "                             <div class=\"status-circle\" ng-class=\"vm.status\">\n" +
-        "                                   <a class=\"ci-link\" href=\"http://gitlab.com/" + this.gitLabName +  "/" + this.baseName + "\">GitLab CI</a>\n" +
-        "                             </div>\n" +
-        "                         </ul>\n" +
-        "                </div>\n" +
-        "            ");
+        '.status-circle.failed {\n' +
+        ' background: #d22852;\n' +
+        '}\n\n' +
+
+        '.ci-link {\n' +
+        '   display: inline-block;\n' +
+        '   vertical-align: middle;\n' +
+        '   color: #666;\n' +
+        '   text-decoration: none;\n' +
+        '}\n\n' +
+
+        '.ci-content {\n' +
+        '   padding: 0;\n' +
+        '   margin: 0;\n' +
+        '   list-style: none;\n' +
+        '}';
+
+      jhipsterFunc.addMainCSSStyle(this.useSass, ciStatusStyle, 'Add sign in style for build status');
+
+      var html = this.fs.read(this.webappDir + '/index.html');
+      var $ = cheerio.load(html);
+      var footer = $('.footer');
+      if (footer.find('#ci-status').length === 0) {
+        footer.append("    <div ng-controller=\"CiStatusController as vm\" id=\"ci-status\">\n" +
+          "                    <div class=\"ci-name\">GitLab CI Status</div>\n" +
+          "                         <ul class=\"ci-content\">\n" +
+          "                             <div class=\"status-circle\" ng-class=\"vm.status\"></div>\n" +
+          "                             <a class=\"ci-link\" href=\"http://gitlab.com/" + this.gitLabName + "/" + this.baseName + "\">GitLab CI</a>\n" +
+          "                         </ul>\n" +
+          "                </div>\n" +
+          "            ");
+      }
+
+      this.fs.write(this.webappDir + '/index.html', $.html());
     }
-
-    this.fs.write(this.webappDir + '/index.html', $.html());
-
-    done();
   },
+
   install: function () {
     var injectJsFilesToIndex = function () {
       this.log('\n' + chalk.bold.green('Running gulp Inject to add javascript to index\n'));
@@ -161,7 +171,10 @@ module.exports = yeoman.Base.extend({
     if (!this.options['skip-install'] && !this.skipClient) {
       injectJsFilesToIndex.call(this);
     }
+  },
+
+  end: function () {
+    this.log(yosay('Yo!! you can see the build status on your application. \n' +
+                  'When pushing your code just reload the page to see the current build status'));
   }
 });
-
-
