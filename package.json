@@ -46,9 +46,6 @@
     "yeoman-assert": "2.1.1",
     "yeoman-test": "1.0.0"
   },
-  "scripts": {
-    "test": "mocha test/*"
-  },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ngaxavi/generator-jhipster-gitlab-ci-build-status/issues"

@@ -20,7 +20,6 @@ describe('JHipster generator gitlab-ci-build-status', function () {
           testmode: true
         })
         .withPrompts({
-          projectName: 'projectTest',
           gitLabName: 'ngaxavi',
           gitLabProjectId:  '6464616',
           gitLabPrivateToken:  'JGukj7wbp-496sUcscG'
