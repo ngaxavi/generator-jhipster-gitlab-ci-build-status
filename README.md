@@ -15,13 +15,31 @@
 # Introduction
 
 This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used in a JHipster application.
-This module will add a view to the last build status of your application, when it deploys on GitLab
+This module will add a view to the last build status of your application footer, when it deploys on GitLab.
+After having push the code you just need to reload the page on your application to see the actual build status.
 
 # Prerequisites
 
-As this is a [JHipster](http://jhipster.github.io/) module, we expect you have JHipster and its related tools already installed:
+As this is a [JHipster](http://jhipster.github.io/) module, we expect you to have JHipster and its related tools already installed:
 
 - [Installing JHipster](https://jhipster.github.io/installation.html)
+
+Moreover you need your private token from GitLab. you can find it
+```bash
+Profile Settings -> Account -> Private Token
+```
+and you need the ID of your project from GitLab
+```
+Setting of your Project -> Triggers
+
+and you will find something like this
+
+curl -X POST \
+     -F token=TOKEN \
+     -F ref=REF_NAME \
+     https://gitlab.com/api/v3/projects/123456/trigger/builds (project ID: 123456)
+     
+```
 
 # Installation
 
@@ -41,11 +59,12 @@ To run the module on a JHipster generated application:
 ```bash
 yo jhipster-gitlab-ci-build-status
 ```
+
 # License
 
 Apache-2.0 © [Xavier Ngansop]
 
-[npm-image]: https://img.shields.io/npm/v/generator-jhipster-gitlab-ci-build-status.svg
+[npm-image]: https://badge.fury.io/js/generator-jhipster-gitlab-ci-build-status.svg
 [npm-url]: https://npmjs.org/package/generator-jhipster-gitlab-ci-build-status
 [travis-image]: https://travis-ci.org/ngaxavi/generator-jhipster-gitlab-ci-build-status.svg?branch=master
 [travis-url]: https://travis-ci.org/ngaxavi/generator-jhipster-gitlab-ci-build-status
